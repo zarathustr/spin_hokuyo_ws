@@ -94,6 +94,7 @@ class ODriveNode(object):
 	self.sweep_factor    = rospy.get_param('~sweep_factor', 0.2)
 	self.user_cpr = rospy.get_param('~user_cpr', 4000)
 	self.drive_mode = rospy.get_param('~drive_mode', "velocity")
+	self.rotation_direction = rospy.get_param('~rotation_direction', "+Yaw")
         
         rospy.on_shutdown(self.terminate)
 
@@ -466,9 +467,26 @@ class ODriveNode(object):
         self.tf_msg.transform.translation.y = self.y
         #self.tf_msg.transform.rotation.x
         #self.tf_msg.transform.rotation.x
-        self.tf_msg.transform.rotation.z = q[2]
-        self.tf_msg.transform.rotation.w = q[3]
-        
+	if self.rotation_direction == "+Yaw":
+            self.tf_msg.transform.rotation.z = q[2]
+            self.tf_msg.transform.rotation.w = q[3]
+	if self.rotation_direction == "-Yaw":
+            self.tf_msg.transform.rotation.z = -q[2]
+            self.tf_msg.transform.rotation.w = q[3]
+	
+        if self.rotation_direction == "+Pitch":
+            self.tf_msg.transform.rotation.y = q[2]
+            self.tf_msg.transform.rotation.w = q[3]
+	if self.rotation_direction == "-Pitch":
+            self.tf_msg.transform.rotation.y = -q[2]
+            self.tf_msg.transform.rotation.w = q[3]
+
+	if self.rotation_direction == "+Roll":
+            self.tf_msg.transform.rotation.x = q[2]
+            self.tf_msg.transform.rotation.w = q[3]
+	if self.rotation_direction == "-Roll":
+            self.tf_msg.transform.rotation.x = -q[2]
+            self.tf_msg.transform.rotation.w = q[3]
         # ... and publish!
         self.odom_publisher.publish(self.odom_msg)
         if self.publish_tf:

@@ -9,7 +9,9 @@
     args="--motor_id=1
           --sweep_factor=0.0005
           --user_cpr=4000
-          --drive_mode=velocity"
+          --drive_mode=velocity
+	  --rotation_direction=+Yaw
+          --Calibration_Axis=1"
     output="screen"
   />
 
@@ -17,8 +19,8 @@
     name="tilt_motor"
     pkg="spin_hokuyo"
     type="tilt_motor"
-    output="screen"
-  />
+  >
+  </node>
 
   <node
     name="tilt_transform"

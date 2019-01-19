@@ -25,5 +25,6 @@
 	<param name="sweep_factor"      value="1.0"/>
 	<param name="user_cpr"      value="4000"/>
 	<param name="drive_mode"      value="position"/>
+	<param name="rotation_direction"      value="+Yaw"/>
     </node>
 </launch>
