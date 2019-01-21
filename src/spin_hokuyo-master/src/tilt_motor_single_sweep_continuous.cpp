@@ -144,8 +144,8 @@ void sweep()
 int main(int argc, char **argv) {
 
     //initialize
-    ros::init(argc, argv, "Motor_Tilt");
-    ros::NodeHandle nh;
+    ros::init(argc, argv, "tilt_motor");
+    ros::NodeHandle nh("~");
 
     //variables
     int max;
@@ -154,17 +154,30 @@ int main(int argc, char **argv) {
     Odrive motor;
 
     //establish parameters
-    nh.param("maximum", max, 180);
-    nh.param("minimum", min, -180);
-    nh.param("pause", pause, 1.0);
-    nh.param("mode", mode, MODE_VEL);
-    nh.param("vel", vel, 0.8);
+
+    if (!nh.getParam ("maximum", max))
+    	max = 180;
+    if (!nh.getParam ("minimum", min))
+    	min = -180;
+    if (!nh.getParam ("pause", pause))
+    	pause = 1.0;
+    if (!nh.getParam ("mode", mode))
+    	mode = MODE_SWEEP;
+    if (!nh.getParam ("vel", vel))
+    	vel = 0.0;
+
+    // nh.param("maximum", max, 180);
+    // nh.param("minimum", min, -180);
+    // nh.param("pause", pause, 1.0);
+    // nh.param("mode", mode, MODE_SWEEP);
+    // nh.param("vel", vel, 0.8);
 
     //transfer parameters to global variables
     max_angle = max;
     min_angle = min;
     pause_time = pause;
 
+    ROS_INFO("Running tilt_motor");
     if(mode == MODE_SWEEP)
     	ROS_INFO("Sweep Mode!");
     else

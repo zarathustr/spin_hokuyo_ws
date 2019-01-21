@@ -6,20 +6,27 @@
     name="odriver_controller_motor1"
     pkg="odrive_ros"
     type="odrive_node.py"
-    args="--motor_id=1
-          --sweep_factor=0.0005
-          --user_cpr=4000
-          --drive_mode=velocity
-	  --rotation_direction=+Yaw
-          --Calibration_Axis=1"
     output="screen"
-  />
+  >
+    <param name="motor_id" value="1"/>
+    <param name="sweep_factor" value="1.0"/>
+    <param name="user_cpr" value="4000"/>
+    <param name="drive_mode" value="velocity"/>
+    <param name="rotation_direction" value="+Yaw"/>
+    <param name="Calibration_Axis" value="1"/>
+  </node>
 
   <node
     name="tilt_motor"
     pkg="spin_hokuyo"
     type="tilt_motor"
+    output="screen"
   >
+    <param name="maximum" value="90"/>
+    <param name="minimum" value="-90"/>
+    <param name="pause" value="0.5"/>
+    <param name="mode" value="1"/>
+    <param name="vel" value="0.1"/>
   </node>
 
   <node
